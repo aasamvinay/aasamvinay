@@ -1,0 +1,1237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+<meta charset="utf-8" />
+<!-- <meta http-equiv="refresh" content="60"> -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<title>
+    Dashboard
+  </title>
+
+
+ <!-- Utile solo agrafico -->
+<link href="use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet"> 
+
+<link href="assets/css/nucleo-icons.css" rel="stylesheet" />   <!-- Utile alle icone navbar -->
+
+<link href="assets/css/black-dashboard.min3f71.css?v=1.1.1" rel="stylesheet" />  <!-- Utile solo agrafico -->
+
+<link href="assets/demo/demo.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"> <!-- Utile icona AI -->
+ <!-- Utile solo agrafico -->
+
+
+<script type="text/javascript">
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+<style type="text/css">
+  .fixed-plugin{
+    display: none;
+  }
+</style>
+<style type="text/css">
+  .card-chart .chart-area {
+    height: 247px;
+    width: 100%;
+  }
+
+    .notification-list li {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.notification-list li span {
+    font-weight: bold;
+    margin-right: 5px;
+}
+</style>
+</head>
+<body class="dark-content">
+<div class="wrapper">
+<div class="navbar-minimize-fixed">
+<button class="minimize-sidebar btn btn-link btn-just-icon">
+<i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
+<i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
+</button>
+</div>
+<div class="sidebar">  
+
+<div class="sidebar-wrapper d-flex flex-column" style="height: 100vh; position: relative; padding-bottom: 50px;">
+<div class="logo">
+<a href="javascript:void(0)" class="simple-text logo-mini">
+IIC
+</a>
+<a href="javascript:void(0)" class="simple-text logo-normal">
+INDUSTRY IN CLOUD
+</a>
+</div>
+<ul class="nav">
+
+
+{% if flag == 'only_devices' %}
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+
+
+
+{% if flag == 'dashboard' %}
+<li class="active">
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+
+<li>
+  <a id="chatIcon" onclick="toggleChat()">
+  <i class="fas fa-robot"></i> 
+  <p>AI</p>
+  </a>
+  </li>
+
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+
+<!--<li>
+    <a href="/statics">
+    <i class="tim-icons icon-coins"></i>
+    <p>Statistics</p>
+    </a>
+</li>-->
+
+{% endif %}
+
+<!-- If flaged all -->
+{% if flag == 'all' %}
+<li class="active">
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+
+<li>
+<div id="chatIcon" class="chat-icon" onclick="toggleChat()">
+        <i class="fas fa-robot"></i>
+</div>
+  <p>AI</p>
+  </a>
+  </li>
+
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+<li>
+<a href="/statics">
+<i class="tim-icons icon-coins"></i>
+<p>Statistics</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+
+{% if role_type == 'customer_admin' %}
+<li class="active">
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+
+
+<li>
+<div id="chatIcon" class="chat-icon" onclick="toggleChat()">
+        <i class="fas fa-robot"></i>
+</div>
+  <p>AI</p>
+  </a>
+  </li>
+
+
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+<li>
+<a href="/statics">
+<i class="tim-icons icon-coins"></i>
+<p>Statistics</p>
+</a>
+</li>
+
+<li>
+<a href="/userdetails">
+<i class="tim-icons icon-badge"></i>
+<p>Users</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+<!-- Elementi ancorati in fondo alla sidebar -->
+<ul class="nav" style="position: absolute; bottom: 100px; width: 100%;">
+<li>
+<a href="/profile_view">
+<i class="tim-icons icon-single-02"></i>
+<p>Profile</p>
+</a>
+</li>
+<li>
+<a href="{{ url_for('logout') }}">
+<i class="tim-icons icon-button-power"></i>
+<p>Logout</p>
+</a>
+</li>
+
+</ul>
+</div>
+</div>
+<div class="main-panel">
+
+<nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+<div class="container-fluid">
+<div class="navbar-wrapper">
+<div class="navbar-minimize d-inline">
+<button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-original-title="Sidebar toggle" data-placement="right">
+<i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
+<i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
+</button>
+</div>
+<div class="navbar-toggle d-inline">
+<button type="button" class="navbar-toggler">
+<span class="navbar-toggler-bar bar1"></span>
+<span class="navbar-toggler-bar bar2"></span>
+<span class="navbar-toggler-bar bar3"></span>
+</button>
+</div>
+<a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-bar navbar-kebab"></span>
+<span class="navbar-toggler-bar navbar-kebab"></span>
+<span class="navbar-toggler-bar navbar-kebab"></span>
+</button>
+<div class="collapse navbar-collapse" id="navigation">
+<ul class="navbar-nav ml-auto">
+ 
+
+<li class="dropdown nav-item">
+<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+
+<div class="photo">
+<img src="assets/img/mike.jpg" alt="Profile Photo">
+</div>
+{{full_name}}
+<b class="caret d-none d-lg-block d-xl-block"></b>
+<!-- <p class="d-lg-none">
+Log out
+</p> -->
+</a>
+<ul class="dropdown-menu dropdown-navbar">
+
+<li class="nav-link">
+<a href = "{{ url_for('logout') }}" class="nav-item dropdown-item">Log out</a>
+</li>
+</ul>
+</li>
+<li class="separator d-lg-none"></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<i class="tim-icons icon-simple-remove"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!--      -->
+
+
+
+<!-------------->
+
+<div class="content">
+<div class="row">
+<h3 class="card-title" style="margin: -8px 0 0px 18px; font-size: 16px;"><span id='midd'>Id: {{machine_idd}} | Name: {{machine_namee}}</span></h3>
+
+<!------------>
+
+<div class="col-lg-12">
+<div class="card">
+<div class="card-header">
+ 
+<h5 class="card-title">Machine status</h5>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table table-sm text-sm">
+<thead class="text-primary">
+<tr>
+<th class="text-center">
+Sel
+</th>
+<th class="text-left">
+MACHINE ID
+</th>
+<th class="text-left">
+STATUS
+</th>
+<th class="text-left">
+RUNNING
+</th>
+<th class="text-left">
+STOP
+</th>
+<th class="text-left">
+ALARM
+</th>
+<th class="text-left">
+PAUSE
+</th>
+<th class="text-left">
+EMERGENCY
+</th>
+<th class="text-left">
+updated
+</th>
+
+</tr>
+</thead>
+<tbody>
+
+{% for s in s_table %}
+
+<tr>
+ 
+<td class="text-center">
+<div class="form-check">
+<label class="form-check-label">
+    <input class="form-check-input" type="checkbox" name="myCheckbox" value="{{s['uid']}}" onclick="selectMachine(this)">
+<!-- <input class="form-check-input" type="checkbox" value="{{s['uid']}}" id="{{s['uid']}}" name="myCheckbox" onclick="selectOnlyThis(this.id)"> -->
+<span class="form-check-sign">
+<span class="check"></span>
+ </span>
+</label>
+</div>
+</td>
+
+<td class="uid">
+            {{s['uid']}}
+          </td>
+<td >
+<span class="invoice-amount">
+{% if s['power_on'] == '1' %}
+ON <i class="fas fa-circle" style="color: #14d211;"></i>
+{% endif %}
+{% if s['power_on'] == '0' %}
+OFF <i class="fas fa-circle" style="color: #ff4834;"></i>
+{% endif %}
+
+</span>
+</td>
+<td class="text-left">
+{% if s['run'] == '1' %}<i class="fas fa-circle" style="color: #14d211;"></i> {% endif %}{% if s['run'] == '0' %}<i class="fas fa-circle" style="color: #ff4834;"></i> {% endif %}
+</td>
+<td class="text-left">
+{% if s['stop'] == '1' %}<i class="fas fa-circle" style="color: #ff4834;"></i> {% endif %}{% if s['stop'] == '0' %}<i class="fas fa-circle" style="color: #14d211;"></i> {% endif %}
+</td>
+<td class="text-left">
+{% if s['alarm'] == '1' %}<i class="fas fa-circle" style="color: #ff4834;"></i> {% endif %}{% if s['alarm'] == '0' %}<i class="fas fa-circle" style="color: #14d211;"></i> {% endif %}
+</td>
+<td class="text-left">
+{% if s['pause'] == '1' %}<i class="fas fa-circle" style="color: #ff4834;"></i> {% endif %}{% if s['pause'] == '0' %}<i class="fas fa-circle" style="color: #14d211;"></i> {% endif %}
+</td>
+<td class="text-left">
+{% if s['emergency'] == '1' %}<i class="fas fa-circle" style="color: #ff4834;"></i> {% endif %}{% if s['emergency'] == '0' %}<i class="fas fa-circle" style="color: #14d211;"></i> {% endif %}
+</td>
+<td class="text-left">
+{{s['lastupdate']}}
+</td>
+ 
+
+</tr>
+{% endfor %}
+
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+<!---------->
+
+<div class="col-12">
+<div class="card card-chart">
+<div class="card-header">
+<div class="row">
+<div class="col-sm-6 text-left">
+<h5 class="card-title">Performance</h5>
+<h4 class="card-title">Total Production</h4>
+</div>
+<div class="col-sm-6">
+<div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+ 
+</div>
+</div>
+</div>
+</div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="chartBig1"></canvas>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-4">
+<div class="card card-chart">
+<div class="card-header">
+<h5 class="card-title">System status on last 3 months in hours</h5>
+ </div>
+<div class="card-body">
+<div class="chart-area">
+<!--<canvas id="chartLinePurple"></canvas>-->
+<canvas id="chartPie"></canvas>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card card-chart">
+<div class="card-header">
+<h5 class="card-title">Daily Production</h5>
+ </div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="CountryChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card card-chart">
+<div class="card-header">
+<h5 class="card-title">Completed Tasks</h5>
+ </div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="chartLineGreen"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+
+<!--   notifications -->
+<div class="col-lg-6">
+    <div class="card card-chart">
+        <div class="card-header">
+            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                <h4 class="card-title" style="margin: 0;">Select Notificattions on time</h4>
+                <input type="text" id="dateRangePicker" placeholder="Scegli il periodo" 
+                       style="padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; min-width: 220px;" />
+            </div>
+            <!--<h4 class="card-title">Last 6 Months</h4>-->
+        </div>
+        <div class="card-body">
+            <div class="chart-area">
+                <canvas id="monthlyNotificationsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-6">
+    <div class="card card-chart">
+            <h4 class="card-title" style="margin: 0;">Top 10 Most Happened Notification On last month</h4>
+        <div class="card-body d-flex">
+            <!-- Sezione Testo Notifiche -->
+            <div class="notification-list" style="flex: 1; padding-right: 20px; max-height: 300px; overflow-y: auto;">
+                <ul id="notificationTextList" style="list-style: none; padding: 0; margin: 0;"></ul>
+            </div>
+
+            <!-- Sezione Grafico a Torta -->
+            <div class="chart-area" style="flex: 1; max-width: 50%;">
+                <canvas id="topNotificationsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<!------->
+<!-- BOT -->
+
+<!-- Bottone per aprire la chat -->
+<div id="chatIcon" class="chat-icon" onclick="toggleChat()">
+    <i class="fas fa-robot"></i>
+</div>
+
+<!-- Finestra della chat -->
+<div id="chatContainer" class="chat-container">
+    <div class="chat-header">
+        <h4>BOBIC -- The AI Technical Service Agent </h4>
+        <button class="close-btn" onclick="toggleChat()">✖</button>
+    </div>
+    <div id="chatOutput" class="chat-output"></div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Scrivi un messaggio..." />
+        <button onclick="sendMessage()">Invia</button>
+    </div>
+</div>
+
+<style>
+    /* Stile per il bottone fisso della chat */
+    .chat-icon {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #007bff;
+        color: white;
+        font-size: 30px;
+        text-align: center;
+        line-height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        transition: background 0.3s ease;
+    }
+
+    .chat-icon i {
+        font-size: 28px;
+        line-height: 60px;
+    }
+
+    .chat-icon:hover {
+        background-color: #0056b3;
+    }
+
+    /* Stile aggiornato per la finestra della chat */
+    .chat-container {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        width: 50%; /* Mezzo schermo */
+        height: 70vh; /* 70% dell'altezza dello schermo */
+        background-color: #121212; /* Sfondo nero */
+        border: 2px solid #444; /* Bordo scuro */
+        box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+        display: none;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+        color: white;
+    }
+
+    /* Intestazione della chat */
+    .chat-header {
+        background-color: #007bff;
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    /* Pulsante di chiusura */
+    .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    /* Area output chat - Ora più grande */
+    .chat-output {
+        flex: 1; /* Occupa tutto lo spazio disponibile */
+        padding: 15px;
+        overflow-y: auto;
+        background: #1e1e1e; /* Grigio scuro */
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #333;
+        max-height: 55vh; /* Imposta un'altezza massima più grande */
+    }
+
+    /* Input e pulsante - Rimangono visibili sempre */
+    .chat-input {
+        display: flex;
+        padding: 15px;
+        background: #121212; /* Nero */
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #555;
+        border-radius: 5px;
+        font-size: 16px;
+        background: #1e1e1e;
+        color: white;
+    }
+
+    .chat-input button {
+        margin-left: 10px;
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .chat-input button:hover {
+        background: #0056b3;
+    }
+</style>
+ <!----------->
+<!--      -->   
+</div>
+</div>
+<footer class="footer">
+<div class="container-fluid">
+ 
+<div class="copyright">
+©
+<script>
+              document.write(new Date().getFullYear())
+            </script> All rights reserved @ INDUSTRY IN CLOUD
+</div>
+</div>
+</footer>
+</div>
+</div>
+{% if role_type == 'customer_admin' %}
+<div class="fixed-plugin">
+<div class="dropdown show-dropdown">
+<a href="#" data-toggle="dropdown">
+<i class="fa fa-cog fa-2x"> </i>
+</a>
+<ul class="dropdown-menu">
+<li class="header-title"> Sidebar Background</li>
+<li class="adjustments-line">
+<a href="javascript:void(0)" class="switch-trigger background-color">
+<div class="badge-colors text-center">
+<span class="badge filter badge-primary active" data-color="primary"></span>
+<span class="badge filter badge-info" data-color="blue"></span>
+<span class="badge filter badge-success" data-color="green"></span>
+<span class="badge filter badge-warning" data-color="orange"></span>
+<span class="badge filter badge-danger" data-color="red"></span>
+</div>
+<div class="clearfix"></div>
+</a>
+</li>
+ 
+<li class="adjustments-line">
+<div class="switch-change-color mt-3" style="text-align: center;">
+
+<input type="radio" name="bedStatus" id="light" checked="checked" value="light"><span style="color:white;">Light</span>
+<input type="radio" name="bedStatus" id="dark" value="dark"><span style="color:white;">Dark</span>
+
+
+</div>
+</li>
+<li class="button-container mt-4">
+ 
+</li>
+ 
+</ul>
+</div>
+</div>
+ {% endif %}
+
+<script src="assets/js/core/jquery.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="assets/js/plugins/moment.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-switch.js"></script>
+
+<script src="assets/js/plugins/sweetalert2.min.js"></script>
+
+<script src="assets/js/plugins/jquery.tablesorter.js"></script>
+
+<script src="assets/js/plugins/jquery.validate.min.js"></script>
+
+<script src="assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+
+<script src="assets/js/plugins/bootstrap-selectpicker.js"></script>
+
+<script src="assets/js/plugins/bootstrap-datetimepicker.js"></script>
+
+<script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-tagsinput.js"></script>
+
+<script src="assets/js/plugins/jasny-bootstrap.min.js"></script>
+
+<script src="assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/daygrid.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/timegrid.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/interaction.min.js"></script>
+
+<script src="assets/js/plugins/jquery-jvectormap.js"></script>
+
+<script src="assets/js/plugins/nouislider.min.js"></script>
+
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGat1sgDZ-3y6fFe6HD7QUziVC6jlJNog"></script> -->
+
+<script src="assets/js/plugins/chartjs.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-notify.js"></script>
+
+<script src="assets/js/black-dashboard.min3f71.js?v=1.1.1"></script>
+
+<!-- <script src="assets/demo/demo.js"></script> -->
+
+<script src="assets/demo/jquery.sharrre.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+
+<!--<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>-->
+
+ 
+<script> 
+// Ottimizzazione del codice esistente per migliorare le prestazioni e la manutenibilità
+
+// Variabili iniziali
+const productionDates = JSON.parse('{{ production_dates|tojson|safe }}');
+const productionCount = JSON.parse('{{ production_count|tojson|safe }}');
+const currentCons = JSON.parse('{{ current_cons|tojson|safe }}');
+const completedTasks = JSON.parse('{{ completed_tasks|tojson|safe }}');
+const completedTasksDates = JSON.parse('{{ completed_tasks_dates|tojson|safe }}');
+const dailyProductionDates = JSON.parse('{{ daily_production_dates|tojson|safe }}');
+const dailyProductionCount = JSON.parse('{{ daily_production_count|tojson|safe }}');
+const stateTimes = JSON.parse('{{ current_cons|tojson|safe }}' || '{}');
+const monthlyNotifications = JSON.parse('{{ monthly_notifications|tojson|safe }}');
+const topNotifications = JSON.parse('{{ top_notifications|tojson|safe }}');
+console.log("📊 State Times ricevuti:", stateTimes);
+console.log("📊 Dati di produzione:", productionDates, productionCount);
+console.log("📊 State Times ricevuti:", currentCons);
+console.log("📊 Dati di produzione:", completedTasksDates, completedTasks);
+console.log("📊 Dati di produzione:", dailyProductionDates, dailyProductionCount);
+console.log("📊 Notifiche Mensili:", monthlyNotifications);
+console.log("📊 Top 10 Notifiche:", topNotifications);
+const newColor = '{{colorname}}';
+
+// Funzione per aggiornare il colore dinamicamente
+function updateColor(color) {
+    const colorClasses = {
+        'primary': 'btn btn-primary',
+        'blue': 'btn btn-info',
+        'green': 'btn btn-success',
+        'orange': 'btn btn-warning',
+        'red': 'btn btn-danger'
+    };
+
+    $('.btn-primary').attr('class', colorClasses[color] || 'btn btn-primary');
+    $('.sidebar, .main-panel, .full-page, body > .navbar-collapse').attr('data', color);
+}
+
+updateColor(newColor);
+
+// Imposta il tema fisso su dark
+function setTheme() {
+    $('body').removeClass('white-content').addClass('dark-content'); // Fisso su dark
+}
+
+// Chiama la funzione per forzare il tema scuro
+//setTheme();
+
+// Disabilita i radio button per evitare cambiamenti
+$('input:radio[name=bedStatus]').prop("disabled", true);
+
+// Funzione AJAX per cambiare impostazioni
+function sendSettings(setting, data) {
+    $.post('/set_settings', { setting, user_id: '{{user_c_id}}', ...data })
+        .done(() => Swal.fire({ title: 'Success', icon: 'success', timer: 1500 }))
+        .fail((err) => Swal.fire({ title: 'Error', text: err.responseText, icon: 'error' }));
+}
+
+// Cambia colore senza ricaricare la pagina
+function colorChange(color) {
+    updateColor(color);
+    sendSettings('colorchange', { colorname: color });
+}
+
+// Cambia background
+function bgChange(bgColor) {
+    sendSettings('bgchange', { bg_color: bgColor });
+}
+
+// Inizializzazione grafici
+function initChart(ctx, labels, data, borderColor, bgColor) {
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: '',
+                fill: true,
+                backgroundColor: bgColor,
+                borderColor,
+                borderWidth: 2,
+                pointBackgroundColor: borderColor,
+                data
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true },
+                x: { ticks: { color: '#6B8E23' } }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+}
+
+// Inizializza i grafici
+//const chartProduction = initChart(document.getElementById("chartBig1"), productionDates, productionCount, '#d346b1', 'rgba(72,72,176,0.1)');
+
+const chartProduction = new Chart(document.getElementById("chartBig1"), {
+    type: "line",
+    data: {
+        labels: productionDates,
+        datasets: [{
+            label: "Produzione Totale",
+            data: productionCount,
+            backgroundColor: 'rgba(66,134,121,0.1)',
+            borderColor: '#d346b1',
+            borderWidth: 2,
+            pointBackgroundColor: '#1f8ef1',
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                ticks: {
+                    callback: function(value) {
+                        return Number(value).toFixed(0); // ✅ Mostra solo numeri interi
+                    }
+                }
+            },
+            x: {
+                ticks: {
+                    autoSkip: true, // ✅ Evita di mostrare troppi valori
+                    maxTicksLimit: 12 // ✅ Limita il numero di tick visibili per chiarezza
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.raw.toFixed(0); // ✅ Mantiene solo valori interi nei tooltip
+                    }
+                }
+            },
+            legend: {
+                display: false // ❌ Se vuoi nascondere la leggenda
+            }
+        }
+    }
+});
+
+
+
+//const chartCurrent = initChart(document.getElementById("chartLinePurple"), productionDates, currentCons, '#d048b6', 'rgba(72,72,176,0.2)');
+//
+
+// Creazione del grafico a torta
+const ctxPie = document.getElementById("chartPie").getContext("2d");
+const firstDeviceKey = Object.keys(stateTimes)[0]; // Prendi il primo dispositivo
+const stateData = stateTimes[firstDeviceKey] || { run: 0, stop: 0, alarm: 0, pause: 0, emergency: 0 };
+console.log("📊 Stato selezionato per il grafico:", stateData);
+
+// **Assicuriamoci che i dati siano sempre nello stesso ordine**
+const orderedStateData = [
+    stateData.run || 0, 
+    stateData.stop || 0, 
+    stateData.alarm || 0, 
+    stateData.pause || 0, 
+    stateData.emergency || 0
+];
+
+console.log("✅ Dati ordinati per il grafico:", orderedStateData);
+
+const chartCurrent = new Chart(ctxPie, {
+  type: "pie",
+  data: {
+    labels: ["Run", "Stop", "Alarm", "Pause", "Emergency"],
+    datasets: [{
+      data: orderedStateData,
+      backgroundColor: ["#4CAF50", "#000000", "#FF9800", "#FFC107", "#F44336"]
+    }]
+  },
+  options: { 
+    responsive: true, 
+    maintainAspectRatio: false, // ❗ Per rendere il grafico più grande e adattabile
+    layout: {
+      padding: 10 // Spazio intorno al grafico per evitare che la legenda si sovrapponga
+    },
+    plugins: {
+      legend: {
+        position: "top", // ✅ Posizione della legenda in alto
+        labels: {
+          font: {
+            size: 12 // ❗ Ridotta la dimensione del testo della legenda
+          },
+          boxWidth: 12, // Ridotte le dimensioni dei quadratini della legenda
+          padding: 10 // Ridotto lo spazio tra gli elementi della legenda
+        }
+      }
+    }
+  }
+});
+
+//
+const chartDaily = initChart(document.getElementById("CountryChart"), dailyProductionDates, dailyProductionCount, '#1f8ef1', 'rgba(29,140,248,0.2)');
+const chartCompleted = initChart(document.getElementById("chartLineGreen"), completedTasksDates, completedTasks, '#00d6b4', 'rgba(66,134,121,0.15)');
+
+
+// Notifications
+
+// 🔹 Converte il dizionario in array per il grafico
+const months = Object.keys(monthlyNotifications);
+const monthlyCounts = Object.values(monthlyNotifications);
+
+// 🆕 Converte l'oggetto in array per il grafico
+const notificationTypes = Object.values(topNotifications);
+console.log("📊 Tipi di Notifiche:", notificationTypes);
+//const notificationCounts = Object.keys(topNotifications).map(key => parseInt(key, 10));
+const notificationCounts = Object.values(topNotifications);
+console.log("📊 Conteggio delle Notifiche:", notificationCounts);
+
+const notificationLabels = Object.keys(topNotifications);
+console.log("📊 Etichette delle Notifiche:", notificationLabels);
+
+
+// 🎨 Stile e colori
+//const colors = ["#1f8ef1", "#FF9800", "#4CAF50", "#FFC107", "#F44336", "#9C27B0", "#3F51B5", "#00BCD4", "#8BC34A", "#E91E63"];
+
+// 🎨 Mappa dei colori dinamica in base al tipo di notifica
+const colors = notificationLabels.map(label => {
+    if (label.startsWith('alarm')) return '#FFC107'; // Giallo per 'alarm'
+    if (label.startsWith('emergency')) return '#FF6F61'; // Rosso per 'emergency'
+    return '#1f8ef1'; // Colore di default (blu) per altri tipi di notifica
+});
+
+// 📊 Grafico Notifiche Mensili
+const ctxMonthly = document.getElementById("monthlyNotificationsChart").getContext("2d");
+new Chart(ctxMonthly, {
+    type: "bar",
+    data: {
+        labels: months,
+        datasets: [{
+            label: "Numero di Notifiche",
+            backgroundColor: "#F44336",
+            borderColor: "#FFC107",
+            data: monthlyCounts,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: { beginAtZero: true }
+        }
+    }
+});
+
+// 🔥 Grafico Top 10 Notifiche
+// 🔥 Popola la lista delle notifiche testuali a sinistra
+const notificationTextList = document.getElementById('notificationTextList');
+notificationTextList.innerHTML = notificationLabels.map((label, index) => {
+    let textColor = 'white'; // Colore di default
+
+    if (label.includes('alarm')) {
+        textColor = 'yellow'; // Giallo per le notifiche di tipo "alarm"
+    } else if (label.includes('emergency')) {
+        textColor = 'red'; // Rosso per le notifiche di tipo "emergency"
+    }
+    return `<li style="color: ${textColor};"><span>•</span> ${label} (${notificationCounts[index]})</li>`;
+}).join('');
+
+// Definisce i colori dinamicamente in base al tipo di notifica
+const notificationColors = notificationLabels.map(label => {
+    if (label.includes('alarm')) {
+        return 'yellow'; // Giallo per le notifiche di tipo 'alarm'
+    } else if (label.includes('emergency')) {
+        return 'red'; // Rosso per le notifiche di tipo 'emergency'
+    }
+    return '#1f8ef1'; // Colore predefinito
+});
+
+// 🔥 Grafico Top 10 Notifiche
+const ctxTop = document.getElementById("topNotificationsChart").getContext("2d");
+new Chart(ctxTop, {
+    type: "doughnut",
+    data: {
+        datasets: [{
+            data: notificationCounts,
+            backgroundColor: colors,
+            hoverOffset: 4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false }, // Nasconde la leggenda per evitare ridondanza
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        const label = notificationLabels[tooltipItem.dataIndex] || '';
+                        const value = notificationCounts[tooltipItem.dataIndex] || 0;
+                        
+                        return `${label}: ${value}`;
+                    }
+                }
+            }
+        }
+    }
+});
+
+
+
+console.time("Caricamento Dati");
+
+function selectMachine(checkbox) {
+
+document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;
+// alert(id.value);
+dashboard(checkbox.value);
+var myCheckbox = document.getElementsByName("myCheckbox");
+Array.prototype.forEach.call(myCheckbox,function(el){
+el.checked = false;
+});
+checkbox.checked = true;
+}
+
+$(function() {
+    $('#dateRangePicker').daterangepicker({
+        opens: 'left',
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
+    }, function(start, end) {
+        const machineId = $('input[name="myCheckbox"]:checked').val();
+        if (!machineId) {
+            alert("Seleziona prima una macchina!");
+            return;
+        }
+
+        dashboard(machineId, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+    });
+});
+
+flatpickr("#dateRangePicker", {
+    mode: "range",
+    dateFormat: "Y-m-d",
+    onClose: function(selectedDates) {
+        if (selectedDates.length === 2) {
+            const start = selectedDates[0].toISOString().split('T')[0];
+            const end = selectedDates[1].toISOString().split('T')[0];
+            const machineId = $('input[name="myCheckbox"]:checked').val();
+
+            if (!machineId) {
+                alert("Seleziona prima una macchina!");
+                return;
+            }
+
+            dashboard(machineId, start, end);
+        }
+    }
+});
+
+
+function dashboard(machine_id, startDate = null, endDate = null) {
+    let url = `${$SCRIPT_ROOT}/dashboard?machine_id=${machine_id}`;
+    if (startDate && endDate) {
+        url += `&start_date=${startDate}&end_date=${endDate}`;
+    }
+
+    $.getJSON(url, function(data) {
+        console.log("📊 Machine:", data);
+
+        $('#midd').text("Id: "+data.machine_idd+" | Name: "+data.machine_namee);
+        $('#machine_id_dt').val(data.machine_idd);
+        
+        chartProduction.data.labels = data.production_dates;
+        chartProduction.data.datasets[0].data = data.production_count;
+        chartProduction.update();
+
+        chartDaily.data.labels = data.daily_production_dates;
+        chartDaily.data.datasets[0].data = data.daily_production_count;
+        chartDaily.update();
+
+        chartCompleted.data.labels = data.completed_tasks_dates;
+        chartCompleted.data.datasets[0].data = data.completed_tasks;
+        chartCompleted.update();
+
+        const months = Object.keys(data.monthly_notifications);
+        const monthlyCounts = Object.values(data.monthly_notifications);
+        chartMonthlyNotifications.data.labels = months;
+        chartMonthlyNotifications.data.datasets[0].data = monthlyCounts;
+        chartMonthlyNotifications.update();
+
+        // 🎯 5. Aggiorna il grafico delle Top 10 Notifiche
+        const notificationTypes = Object.values(data.top_notifications);
+        const notificationCounts = Object.keys(data.top_notifications).map(key => parseInt(key, 10));
+
+    }
+    );
+
+};
+
+// Bot AI
+function sendMessage() {
+    const input = document.getElementById('userInput').value;
+    const chatOutput = document.getElementById('chatOutput');
+
+    chatOutput.innerHTML += `<p><b>Utente:</b> ${input}</p>`;
+    document.getElementById('userInput').value = '';
+
+    fetch('/chatbot', {
+        method: 'POST',
+        credentials: 'include',  
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: input })
+        
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.messages) {
+            data.messages.forEach(msg => {
+                chatOutput.innerHTML += `<p><b>Bot:</b> ${msg}</p>`;
+            });
+        } else {
+            chatOutput.innerHTML += `<p><b>Errore:</b> Nessuna risposta dal bot.</p>`;
+        }
+        chatOutput.scrollTop = chatOutput.scrollHeight;
+    })
+    .catch(error => {
+        chatOutput.innerHTML += `<p><b>Errore:</b> Impossibile comunicare con il bot.</p>`;
+    });
+}
+
+/* Funzione per chiudere/aprire la chat */
+function toggleChat() {
+    const chatBox = document.getElementById('chatContainer');
+    const chatIcon = document.getElementById('chatIcon');
+
+    if (chatBox.style.display === 'none' || chatBox.style.display === '') {
+        chatBox.style.display = 'block';
+        chatIcon.style.display = 'none'; // Nasconde l'icona quando la chat è aperta
+    } else {
+        chatBox.style.display = 'none';
+        chatIcon.style.display = 'block'; // Mostra l'icona quando la chat è chiusa
+    }
+}
+
+
+
+</script>
+
+</body>
+
+ 
+</html>

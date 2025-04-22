@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<title>
+    Profile
+  </title>
+
+
+
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" /> -->
+<link href="use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+<link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+
+<link href="assets/css/black-dashboard.min3f71.css?v=1.1.1" rel="stylesheet" />
+
+<link href="assets/demo/demo.css" rel="stylesheet" />
+  <script src="js/jquery.min.js"></script>
+
+
+  <script src="assets/js/nadd.js"></script>
+  <style type="text/css">
+  .fixed-plugin{
+    display: none;
+  }
+</style>
+<style type="text/css">
+  option { 
+    /* Whatever color  you want */
+    background-color: #ede1e1;
+}
+</style>
+
+
+
+
+</head>
+<body class="dark-content">
+<div class="wrapper">
+<div class="navbar-minimize-fixed">
+<button class="minimize-sidebar btn btn-link btn-just-icon">
+<i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
+<i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
+</button>
+</div>
+<div class="sidebar">
+
+<div class="sidebar-wrapper">
+<div class="logo">
+<a href="javascript:void(0)" class="simple-text logo-mini">
+IIC
+</a>
+<a href="javascript:void(0)" class="simple-text logo-normal">
+INDUSTRY IN CLOUD
+</a>
+</div>
+<ul class="nav">
+
+
+{% if flag == 'only_devices' %}
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+
+
+
+{% if flag == 'dashboard' %}
+<li>
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+{% if flag == 'all' %}
+<li>
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+<li>
+<a href="/statics">
+<i class="tim-icons icon-coins"></i>
+<p>Statistics</p>
+</a>
+</li>
+
+
+
+{% endif %}
+
+
+
+
+{% if role_type == 'customer_admin' %}
+<li>
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+<li>
+<a href="/statics">
+<i class="tim-icons icon-coins"></i>
+<p>Statistics</p>
+</a>
+</li>
+
+<li>
+<a href="/userdetails">
+<i class="tim-icons icon-badge"></i>
+<p>Users</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+
+<!-- Elementi ancorati in fondo alla sidebar -->
+<ul class="nav" style="position: absolute; bottom: 100px; width: 100%;">
+  <li>
+  <a href="/profile_view">
+  <i class="tim-icons icon-single-02"></i>
+  <p>Profile</p>
+  </a>
+  </li>
+  <li>
+  <a href="{{ url_for('logout') }}">
+  <i class="tim-icons icon-button-power"></i>
+  <p>Logout</p>
+  </a>
+  </li>
+  
+  </ul>
+
+</div>
+</div>
+<div class="main-panel">
+
+<nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+<div class="container-fluid">
+<div class="navbar-wrapper">
+<div class="navbar-minimize d-inline">
+<button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-original-title="Sidebar toggle" data-placement="right">
+<i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
+<i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
+</button>
+</div>
+<div class="navbar-toggle d-inline">
+<button type="button" class="navbar-toggler">
+<span class="navbar-toggler-bar bar1"></span>
+<span class="navbar-toggler-bar bar2"></span>
+<span class="navbar-toggler-bar bar3"></span>
+</button>
+</div>
+<a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-bar navbar-kebab"></span>
+<span class="navbar-toggler-bar navbar-kebab"></span>
+<span class="navbar-toggler-bar navbar-kebab"></span>
+</button>
+<div class="collapse navbar-collapse" id="navigation">
+<ul class="navbar-nav ml-auto">
+ 
+
+<li class="dropdown nav-item">
+<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+
+<div class="photo">
+<img src="assets/img/mike.jpg" alt="Profile Photo">
+</div>
+{{full_name}}
+<b class="caret d-none d-lg-block d-xl-block"></b>
+<!-- <p class="d-lg-none">
+Log out
+</p> -->
+</a>
+<ul class="dropdown-menu dropdown-navbar">
+
+<li class="nav-link">
+<a href = "{{ url_for('logout') }}" class="nav-item dropdown-item">Log out</a>
+</li>
+</ul>
+</li>
+<li class="separator d-lg-none"></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<i class="tim-icons icon-simple-remove"></i>
+</button>
+</div>
+</div>
+</div>
+</div> 
+
+<div class="content">
+<div class="row">
+<div class="col-md-12">
+<div class="card">
+<div class="card-header">
+<h5 class="title">Edit Profile</h5>
+</div>
+<div class="card-body">
+<form id="form_profile_edit">
+<div class="row">
+<div class="col-md-3 pr-md-1">
+  <input type="hidden" name="user_id" value="{{user_id}}">
+<div class="form-group">
+<label>User ID (disabled)</label>
+<input type="text" class="form-control" readonly="" value="{{user_id}}">
+</div>
+</div>
+<div class="col-md-3 px-md-1">
+<div class="form-group">
+<label>Fullname</label>
+<input type="text" class="form-control" name="fullname" value="{{full_name}}">
+</div>
+</div>
+<div class="col-md-3 pl-md-1">
+<div class="form-group">
+<label>Email (disabled)</label>
+<input type="email" class="form-control" readonly=""  value="{{email_id}}">
+</div>
+</div>
+<div class="col-md-3 pr-md-1">
+<div class="form-group">
+<label>Role (disabled)</label>
+<input type="text" class="form-control" readonly="" value="{{role_type}}">
+</div>
+</div>
+</div>
+<div class="row" style="display: none;">
+<div class="col-md-3 pr-md-1">
+<div class="form-group">
+<label>Phone (disabled)</label>
+<input type="text" class="form-control"  readonly="" value="{{phone_number}}">
+</div>
+</div>
+<div class="col-md-3 pr-md-1">
+<div class="form-group">
+<label>Country (disabled)</label>
+<select name="country" class="form-control" id="countryS" readonly="">
+  <option value="{{country}}">{{country}}</option>
+  <!-- <option value="">Select Country</option> -->
+  </select>
+
+<!-- <input type="text" class="form-control" name="country"  value="{{country}}"> -->
+</div>
+</div>
+
+<div class="col-md-3 pl-md-1">
+<div class="form-group">
+<label>State (disabled)</label>
+<select name="state" class="form-control" id="stateS" readonly="">
+  <option value="{{state}}">{{state}}</option>
+  <!-- <option value="">Select Country</option> -->
+  </select>
+
+<!-- <input type="text" class="form-control" name="state"  value="{{state}}"> -->
+</div>
+</div>
+
+
+
+<div class="col-md-3 px-md-1">
+<div class="form-group">
+<label>City (disabled)</label>
+<select name="city" class="form-control" id="cityS" readonly="">
+  <option value="{{city}}">{{city}}</option>
+  <!-- <option value="">Select Country</option> -->
+  </select>
+
+<!-- <input type="text" class="form-control" name="city" value="{{city}}" style="color:white;"> -->
+</div>
+</div>
+
+
+</div>
+
+
+<div class="card-footer">
+<input type="button" type="submit" class="btn btn-fill btn-primary" id="profile_edit_submit" value="Update">
+</div>
+
+</form>
+
+
+</div>
+
+</div>
+</div>
+
+
+<div class="col-md-12">
+<div class="card">
+<div class="card-header">
+<h5 class="title">Reset Password</h5>
+
+</div>
+<div class="card-body">
+<form class="formValidate0" id="edit_pass" >
+  <input type="hidden" name="user_id_pw" value="{{user_id}}">
+<div class="row">
+<div class="col-md-3 pr-md-1">
+<div class="form-group">
+<label>Current Password *</label>
+<input type="password" class="form-control" name="current_pw" required>
+</div>
+</div>
+<div class="col-md-3 px-md-1">
+<div class="form-group">
+<label>New Password *</label>
+<input type="password" class="form-control" name="new_pw" required>
+</div>
+</div>
+
+</div>
+
+
+
+<div class="card-footer">
+  <input type="button" type="submit" class="btn btn-fill btn-primary" id="edit_pw" value="Update">
+
+</div>
+
+</form>
+
+
+</div>
+
+</div>
+<!----->
+<!--  emails   -->
+<div class="card">
+  <div class="card-header">
+      <h5 class="card-category">Impostazioni Notifiche Automatiche</h5>
+      <h2 class="card-title">Configura Soglie</h2>
+  </div>
+  <div class="card-body">
+      <div class="form-group">
+          <label for="errorThreshold">Soglia Errori Frequenti</label>
+          <input type="number" id="errorThreshold" value="5" class="form-control" placeholder="Numero di errori">
+      </div>
+      <div class="form-group">
+          <label for="stopThreshold">Soglia Impianto Fermo (minuti)</label>
+          <input type="number" id="stopThreshold" value="3" class="form-control" placeholder="Minuti di fermo">
+      </div>
+      <button onclick="updateNotificationSettings()" class="btn btn-primary">Aggiorna Impostazioni</button>
+  </div>
+</div>
+<!---  emails   -->
+<!------>
+</div>
+
+</div>
+</div>
+<footer class="footer">
+<div class="container-fluid">
+ 
+<div class="copyright">
+©
+<script>
+              document.write(new Date().getFullYear())
+            </script> All rights reserved @ INDUSTRY IN CLOUD
+</div>
+</div>
+</footer>
+</div>
+</div>
+{% if role_type == 'customer_admin' %}
+<div class="fixed-plugin">
+<div class="dropdown show-dropdown">
+<a href="#" data-toggle="dropdown">
+<i class="fa fa-cog fa-2x"> </i>
+</a>
+<ul class="dropdown-menu">
+<li class="header-title"> Sidebar Background</li>
+<li class="adjustments-line">
+<a href="javascript:void(0)" class="switch-trigger background-color">
+<div class="badge-colors text-center">
+<span class="badge filter badge-primary active" data-color="primary"></span>
+<span class="badge filter badge-info" data-color="blue"></span>
+<span class="badge filter badge-success" data-color="green"></span>
+<span class="badge filter badge-warning" data-color="orange"></span>
+<span class="badge filter badge-danger" data-color="red"></span>
+</div>
+<div class="clearfix"></div>
+</a>
+</li>
+ 
+<li class="adjustments-line">
+<div class="switch-change-color mt-3" style="text-align: center;">
+
+<input type="radio" name="bedStatus" id="light" checked="checked" value="light"><span style="color:white;">Light</span>
+<input type="radio" name="bedStatus" id="dark" value="dark"><span style="color:white;">Light</span>
+
+</div>
+</li>
+<li class="button-container mt-4">
+ 
+</li>
+ 
+</ul>
+</div>
+</div>
+ {% endif %}
+
+<script src="assets/js/core/jquery.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="assets/js/plugins/moment.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-switch.js"></script>
+
+<script src="assets/js/plugins/sweetalert2.min.js"></script>
+
+<script src="assets/js/plugins/jquery.tablesorter.js"></script>
+
+<script src="assets/js/plugins/jquery.validate.min.js"></script>
+
+<script src="assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+
+<script src="assets/js/plugins/bootstrap-selectpicker.js"></script>
+
+<script src="assets/js/plugins/bootstrap-datetimepicker.js"></script>
+
+<script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-tagsinput.js"></script>
+
+<script src="assets/js/plugins/jasny-bootstrap.min.js"></script>
+
+<script src="assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/daygrid.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/timegrid.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/interaction.min.js"></script>
+
+<script src="assets/js/plugins/jquery-jvectormap.js"></script>
+
+<script src="assets/js/plugins/nouislider.min.js"></script>
+
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGat1sgDZ-3y6fFe6HD7QUziVC6jlJNog"></script> -->
+
+<script src="assets/js/plugins/chartjs.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-notify.js"></script>
+
+<script src="assets/js/black-dashboard.min3f71.js?v=1.1.1"></script>
+
+<script src="assets/demo/demo.js"></script>
+
+<script src="assets/demo/jquery.sharrre.js"></script>
+ 
+ 
+<script>
+  var new_color2 = '{{colorname}}';
+  $clr = $('.btn-primary');
+  $main_panel = $('.main-panel');
+  $full_page = $('.full-page');
+  $sidebar_responsive = $('body > .navbar-collapse');
+  $sidebar = $('.sidebar');
+  $sidebar.attr('data', new_color2);
+  if (new_color2=='primary') $clr.attr('class', 'btn btn-primary');
+  if (new_color2=='blue') $clr.attr('class', 'btn btn-info');
+  if (new_color2=='green') $clr.attr('class', 'btn btn-success');
+  if (new_color2=='orange') $clr.attr('class', 'btn btn-warning');
+  if (new_color2=='red') $clr.attr('class', 'btn btn-danger');
+  $main_panel.attr('data', new_color2);
+  $full_page.attr('filter-color', new_color2);
+  $sidebar_responsive.attr('data', new_color2);
+  
+  // Imposta il tema oscuro fisso fin dall'inizio
+  $(document).ready(function() {
+    $('body').removeClass('white-content').addClass('black-content');
+  
+    $('.switch-change-color input').off("switchChange.bootstrapSwitch"); // Disabilita il cambio del tema
+  
+    $('.light-badge').off('click'); // Disabilita il pulsante per il tema chiaro
+    $('.dark-badge').off('click'); // Disabilita il pulsante per il tema scuro
+  
+    // Assicura che il tema scuro sia sempre attivo
+    $('body').removeClass('change-background');
+    $('body').removeClass('white-content').addClass('black-content');
+  });
+  
+  </script>
+  
+<script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+      demo.initVectorMap();
+
+    });
+
+
+
+
+    $("#profile_edit_submit").click(function(){
+  var user_id = ((document.getElementById('form_profile_edit').elements['user_id'].value));
+  var city = ((document.getElementById('form_profile_edit').elements['city'].value));
+  var state = ((document.getElementById('form_profile_edit').elements['state'].value));
+  var country = ((document.getElementById('form_profile_edit').elements['country'].value));
+  var fullname = ((document.getElementById('form_profile_edit').elements['fullname'].value));
+
+
+  if (user_id != '' ){
+          $.ajax({
+                type : "post",
+                url: '/set_settings',
+                dataType : "text",
+                data:'setting=edit_profile&user_id='+user_id+'&city='+city+'&state='+state+'&country='+country+'&fullname='+fullname,
+                success : function(data) {
+                  // alert(data);
+                  Swal.fire({
+                   position:'center',
+                    type:'success',
+                    title:'Success',
+                    showConfirmButton:false,
+                    timer:1500
+                }).then(function(){ 
+                       location.reload();
+                       }
+                    );                    
+                },
+                error : function(data) {
+                  // alert("Error");
+                  Swal.fire({
+                    title: 'Error',
+                    icon: 'error'
+                  })                     
+                }
+        });
+
+  }
+  else {
+          Swal.fire({
+                    title: 'Something went wrong',
+                    icon: 'error'
+                  })
+
+        }
+
+})
+
+
+
+
+
+$("#edit_pw").click(function(){
+  var user_id_pw = ((document.getElementById('edit_pass').elements['user_id_pw'].value));
+  var current_pw = ((document.getElementById('edit_pass').elements['current_pw'].value));
+  var new_pw = ((document.getElementById('edit_pass').elements['new_pw'].value));
+ 
+
+
+  if (user_id_pw != '' ){
+          $.ajax({
+                type : "post",
+                url: '/set_settings',
+                dataType : "text",
+                data:'setting=edit_pw&user_id='+user_id_pw+'&current_pw='+current_pw+'&new_pw='+new_pw,
+                success : function(data) {
+                  // alert(data);
+                  Swal.fire({
+                  title: 'Success',
+                  icon: 'success',
+                  text:"Password Updated Successfully"
+                }).then(function(){ 
+                       location.reload();
+                       }
+                    );                     
+                },
+                error : function(data) {
+                  Swal.fire({
+                    title: 'Error',
+                    text:data.responseText,
+                    icon: 'error'
+                  })                     
+                }
+        });
+
+  }
+  else {
+          Swal.fire({
+                    title: 'Something went wrong',
+                    icon: 'error'
+                  })
+
+        }
+
+})
+
+
+// Invia le nuove impostazioni al backend
+function updateNotificationSettings() {
+    const errorThreshold = document.getElementById('errorThreshold').value;
+    const stopThreshold = document.getElementById('stopThreshold').value;
+
+    $.ajax({
+        url: '/set_settings',
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            error_threshold: errorThreshold,
+            stop_threshold: stopThreshold
+        }),
+        success: function(response) {
+            Swal.fire({
+                title: 'Impostazioni Salvate',
+                icon: 'success',
+                timer: 1500
+            });
+        },
+        error: function(xhr, status, error) {
+            Swal.fire({
+                title: 'Errore',
+                text: xhr.responseText,
+                icon: 'error'
+            });
+        }
+    });
+}
+
+
+
+  </script>
+</body>
+
+ 
+</html>

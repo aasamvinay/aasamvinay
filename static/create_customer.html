@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+{% with messages = get_flashed_messages() %}  
+                {% if messages %}  
+                   {% for message in messages %}  
+                        <p>{{ message }}</p>  
+                   {% endfor %}  
+                {% endif %}  
+                {% endwith %}
+                <form action="/create_admin" method="post">
+                    <input type="text" name="customer_name" placeholder="Enter name">
+                    <input type="text" name="customer_email" placeholder="Enter email">
+                    <input type="password" name="customer_password" placeholder="Enter password">
+                    <br><br>
+                    <input type="submit">
+                </form>
+                <br><br>
+
+                <a href="/">Back to Home</a>
+</body>
+</html>

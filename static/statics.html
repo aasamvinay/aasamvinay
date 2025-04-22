@@ -1,0 +1,1271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<title>
+    Statics
+  </title>
+
+
+
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" /> -->
+<link href="use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+<link href="assets/css/nucleo-icons.css" rel="stylesheet" />
+
+<link href="assets/css/black-dashboard.min3f71.css?v=1.1.1" rel="stylesheet" />
+
+<link href="assets/demo/demo.css" rel="stylesheet" />
+
+<script type="text/javascript">
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+<style type="text/css">
+  .fixed-plugin{
+    display: none;
+  }
+</style>
+<style type="text/css">
+  .card-chart .chart-area {
+    height: 247px;
+    width: 100%;
+}
+
+.btn{
+    padding: 10px 8px!important;
+  }
+
+
+
+
+</style>
+</head>
+<body class="white-content">
+<div class="wrapper">
+<div class="navbar-minimize-fixed">
+<button class="minimize-sidebar btn btn-link btn-just-icon">
+<i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
+<i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
+</button>
+</div>
+<div class="sidebar">
+
+<div class="sidebar-wrapper">
+<div class="logo">
+<a href="javascript:void(0)" class="simple-text logo-mini">
+IIC
+</a>
+<a href="javascript:void(0)" class="simple-text logo-normal">
+INDUSTRY IN CLOUD
+</a>
+</div>
+<ul class="nav">
+
+
+{% if flag == 'only_devices' %}
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+
+
+
+{% if flag == 'dashboard' %}
+<li>
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+{% if flag == 'all' %}
+<li>
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+<li class="active">
+<a href="/statics">
+<i class="tim-icons icon-coins"></i>
+<p>Statistics</p>
+</a>
+</li>
+
+
+
+{% endif %}
+
+
+
+
+{% if role_type == 'customer_admin' %}
+<li>
+<a href="/dashboard">
+<i class="tim-icons icon-chart-pie-36"></i>
+<p>Dashboard</p>
+</a>
+</li>
+
+
+
+<li>
+<a href="/devices">
+<i class="tim-icons icon-atom"></i>
+<p>Devices</p>
+</a>
+</li>
+<li>
+<a href="/notifications">
+<i class="tim-icons icon-bell-55"></i>
+<p>Notifications</p>
+</a>
+</li>
+<li  class="active">
+<a href="/statics">
+<i class="tim-icons icon-coins"></i>
+<p>Statistics</p>
+</a>
+</li>
+
+<li>
+<a href="/userdetails">
+<i class="tim-icons icon-badge"></i>
+<p>Users</p>
+</a>
+</li>
+
+{% endif %}
+
+
+
+
+<li>
+<a href="/profile_view">
+<i class="tim-icons icon-single-02"></i>
+<p>Profile</p>
+</a>
+</li>
+<li>
+<a href="{{ url_for('logout') }}">
+<i class="tim-icons icon-button-power"></i>
+<p>Logout</p>
+</a>
+</li>
+
+</ul>
+</div>
+</div>
+<div class="main-panel">
+
+<nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+<div class="container-fluid">
+<div class="navbar-wrapper">
+<div class="navbar-minimize d-inline">
+<button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-original-title="Sidebar toggle" data-placement="right">
+<i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
+<i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
+</button>
+</div>
+<div class="navbar-toggle d-inline">
+<button type="button" class="navbar-toggler">
+<span class="navbar-toggler-bar bar1"></span>
+<span class="navbar-toggler-bar bar2"></span>
+<span class="navbar-toggler-bar bar3"></span>
+</button>
+</div>
+<a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-bar navbar-kebab"></span>
+<span class="navbar-toggler-bar navbar-kebab"></span>
+<span class="navbar-toggler-bar navbar-kebab"></span>
+</button>
+<div class="collapse navbar-collapse" id="navigation">
+<ul class="navbar-nav ml-auto">
+ 
+
+<li class="dropdown nav-item">
+
+<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+
+<div class="photo">
+<img src="assets/img/mike.jpg" alt="Profile Photo">
+</div>
+{{full_name}}
+<b class="caret d-none d-lg-block d-xl-block"></b>
+<!-- <p class="d-lg-none">
+Log out
+</p> -->
+</a>
+<ul class="dropdown-menu dropdown-navbar">
+
+<li class="nav-link">
+<a href = "{{ url_for('logout') }}" class="nav-item dropdown-item">Log out</a>
+</li>
+</ul>
+</li>
+<li class="separator d-lg-none"></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<i class="tim-icons icon-simple-remove"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="content">
+
+
+
+<div class="row">
+  <div class="col-md-12 mb-4">
+<h4 class="card-title"><span id='midd'>Id: {{machine_idd}} | Name: {{machine_namee}}</span></h4>
+<div class="row">
+<div class="col-">
+<form id="statics_dt">
+<input type="hidden" name="machine_id_dt" id="machine_id_dt" value="{{machine_idd}}">
+
+   <div class="form-group" style="float:left;margin: 0 0 0 10px;">
+    <label>From Date</label>
+<input type="date" class="form-control datepicker" name="fromdate" id="fromdate" style="color:black;background: white; width: 142px;" >
+</div>
+<div class="form-group" style="margin: 0 0 0 5px;float:left;">
+<label>To Date</label>
+<input type="date" class="form-control datepicker" name="todate" id="todate" style="color:black;background: white; width: 142px;">
+</div>
+</div>
+<div class="col-">
+<div class="form-group res2" style="float:left;margin: 24px 0 0 5px;">
+<input type="button" class="btn btn-primary res" id="statics_dt_go" value="GO">
+</div>
+</div>
+<div class="col-">
+  <div class="form-group res3" style="float:left;margin: 0 0 0 10px;">
+  <label>Choose Report</label>
+<select class="form-control" id="report" style="color:black;background: white;">
+<option value="datatransferred">Data Transferred</option>
+<option value="analyticsstatus">Analytics Status</option>
+<option value="alarmstatus">Alarm Status</option>
+</select>
+</div>
+</div>
+<div class="col-">
+<div class="form-group" style="float:left;margin: 24px 0 0 15px;">
+<input type="button" class="btn btn-primary" onclick="downloadExcelReport()" value="DOWNLOAD REPORT">
+</div>
+</form>
+</div>
+
+
+</div>
+</div>
+
+
+<div class="col-12">
+<div class="card card-chart">
+<div class="card-header">
+<div class="row">
+<div class="col-sm-6 text-left">
+<h5 class="card-category">Performance</h5>
+<h2 class="card-title">Total Production</h2>
+</div>
+<div class="col-sm-6">
+<div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+ 
+</div>
+</div>
+</div>
+</div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="chartBig1"></canvas>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="col-lg-4">
+<div class="card card-chart">
+<div class="card-header">
+<h5 class="card-category">Current Consumption</h5>
+ </div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="chartLinePurple"></canvas>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card card-chart">
+<div class="card-header">
+<h5 class="card-category">Daily Production</h5>
+ </div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="CountryChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card card-chart">
+<div class="card-header">
+<h5 class="card-category">Completed Tasks</h5>
+ </div>
+<div class="card-body">
+<div class="chart-area">
+<canvas id="chartLineGreen"></canvas>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+
+<div class="col-lg-12">
+<div class="card">
+<div class="card-header">
+ 
+<h5 class="card-title">Machine status</h5>
+</div>
+<div class="card-body">
+<div class="table-responsive">
+<table class="table">
+<thead class="text-primary">
+<tr>
+<th class="text-center">
+#
+</th>
+<th class="text-left">
+MACHINE ID
+</th>
+<th class="text-left">
+STATUS
+</th>
+<th class="text-left">
+RUNNING
+</th>
+<th class="text-left">
+STOP
+</th>
+<th class="text-left">
+IN ALARM
+</th>
+<th class="text-left">
+IN PAUSE
+</th>
+<th class="text-left">
+IN EMERGENCY
+</th>
+<th class="text-left">
+TIME STAMP
+</th>
+
+</tr>
+</thead>
+<tbody>
+
+{% for s in s_table %}
+
+<tr>
+ 
+<td class="text-center">
+<div class="form-check">
+<label class="form-check-label">
+    <input class="form-check-input" type="checkbox" name="myCheckbox" value="{{s['uid']}}" onclick="selectOnlyThis(this)">
+<!-- <input class="form-check-input" type="checkbox" value="{{s['uid']}}" id="{{s['uid']}}" name="myCheckbox" onclick="selectOnlyThis(this.id)"> -->
+<span class="form-check-sign">
+<span class="check"></span>
+ </span>
+</label>
+</div>
+</td>
+
+<td class="uid">
+            {{s['uid']}}
+          </td>
+<td >
+<span class="invoice-amount">
+{% if s['power_on'] == '1' %}
+ON
+{% endif %}
+{% if s['power_on'] == '0' %}
+OFF
+{% endif %}
+
+</span>
+</td>
+<td class="text-left">
+{{s['run']}}
+</td>
+<td class="text-left">
+{{s['stop']}}
+</td>
+<td class="text-left">
+{{s['alarm']}}
+</td>
+<td class="text-left">
+{{s['pause']}}
+</td>
+<td class="text-left">
+{{s['emergency']}}
+</td>
+<td class="text-left">
+{{s['lastupdate']}}
+</td>
+ 
+
+</tr>
+{% endfor %}
+
+
+
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<footer class="footer">
+<div class="container-fluid">
+ 
+<div class="copyright">
+©
+<script>
+              document.write(new Date().getFullYear())
+            </script> All rights reserved @ INDUSTRY IN CLOUD
+</div>
+</div>
+</footer>
+</div>
+</div>
+{% if role_type == 'customer_admin' %}
+<div class="fixed-plugin">
+<div class="dropdown show-dropdown">
+<a href="#" data-toggle="dropdown">
+<i class="fa fa-cog fa-2x"> </i>
+</a>
+<ul class="dropdown-menu">
+<li class="header-title"> Sidebar Background</li>
+<li class="adjustments-line">
+<a href="javascript:void(0)" class="switch-trigger background-color">
+<div class="badge-colors text-center">
+<span class="badge filter badge-primary active" data-color="primary"></span>
+<span class="badge filter badge-info" data-color="blue"></span>
+<span class="badge filter badge-success" data-color="green"></span>
+<span class="badge filter badge-warning" data-color="orange"></span>
+<span class="badge filter badge-danger" data-color="red"></span>
+</div>
+<div class="clearfix"></div>
+</a>
+</li>
+ 
+<li class="adjustments-line">
+<div class="switch-change-color mt-3" style="text-align: center;">
+
+<input type="radio" name="bedStatus" id="light" checked="checked" value="light"><span style="color:white;">Light</span>
+<input type="radio" name="bedStatus" id="dark" value="dark"><span style="color:white;">Dark</span>
+
+</div>
+</li>
+<li class="button-container mt-4">
+ 
+</li>
+ 
+</ul>
+</div>
+</div>
+ {% endif %}
+
+<script src="assets/js/core/jquery.min.js"></script>
+<script src="assets/js/core/popper.min.js"></script>
+<script src="assets/js/core/bootstrap.min.js"></script>
+<script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="assets/js/plugins/moment.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-switch.js"></script>
+
+<script src="assets/js/plugins/sweetalert2.min.js"></script>
+
+<script src="assets/js/plugins/jquery.tablesorter.js"></script>
+
+<script src="assets/js/plugins/jquery.validate.min.js"></script>
+
+<script src="assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+
+<script src="assets/js/plugins/bootstrap-selectpicker.js"></script>
+
+<script src="assets/js/plugins/bootstrap-datetimepicker.js"></script>
+
+<script src="assets/js/plugins/jquery.dataTables.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-tagsinput.js"></script>
+
+<script src="assets/js/plugins/jasny-bootstrap.min.js"></script>
+
+<script src="assets/js/plugins/fullcalendar/fullcalendar.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/daygrid.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/timegrid.min.js"></script>
+<script src="assets/js/plugins/fullcalendar/interaction.min.js"></script>
+
+<script src="assets/js/plugins/jquery-jvectormap.js"></script>
+
+<script src="assets/js/plugins/nouislider.min.js"></script>
+
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGat1sgDZ-3y6fFe6HD7QUziVC6jlJNog"></script> -->
+
+<script src="assets/js/plugins/chartjs.min.js"></script>
+
+<script src="assets/js/plugins/bootstrap-notify.js"></script>
+
+<script src="assets/js/black-dashboard.min3f71.js?v=1.1.1"></script>
+
+<!-- <script src="assets/demo/demo.js"></script> -->
+
+<script src="assets/demo/jquery.sharrre.js"></script>
+ 
+ 
+<script>
+    var production_dates = JSON.parse('{{ production_dates|tojson|safe }}');
+var production_count = JSON.parse('{{ production_count|tojson|safe }}');
+var current_cons = JSON.parse('{{ current_cons|tojson|safe }}');
+var completed_tasks = JSON.parse('{{ completed_tasks|tojson|safe }}');
+var completed_tasks_dates = JSON.parse('{{ completed_tasks_dates|tojson|safe }}');
+var daily_production_count = JSON.parse('{{ daily_production_count|tojson|safe }}');
+var daily_production_dates = JSON.parse('{{ daily_production_dates|tojson|safe }}');
+
+
+ var new_color2 = '{{colorname}}';
+$clr = $('.btn-primary');
+$main_panel = $('.main-panel');
+$full_page = $('.full-page');
+$sidebar_responsive = $('body > .navbar-collapse');
+$sidebar = $('.sidebar');
+$sidebar.attr('data', new_color2);
+if (new_color2=='primary') $clr.attr('class', 'btn btn-primary');
+if (new_color2=='blue') $clr.attr('class', 'btn btn-info');
+if (new_color2=='green') $clr.attr('class', 'btn btn-success');
+if (new_color2=='orange') $clr.attr('class', 'btn btn-warning');
+if (new_color2=='red') $clr.attr('class', 'btn btn-danger');
+$main_panel.attr('data', new_color2);
+$full_page.attr('filter-color', new_color2);
+$sidebar_responsive.attr('data', new_color2);
+
+
+var bg_color = 'light';
+if (bg_color == 'light'){
+  $('body').removeClass('change-background');
+  $('body').addClass('white-content');
+  $("input[name=bedStatus][value='light']").prop("checked",true);
+  $("input[name=bedStatus][value='dark']").prop("checked",false);
+}
+else{
+  $("input[name=bedStatus][value='light']").prop("checked",false);
+  $("input[name=bedStatus][value='dark']").prop("checked",true);
+}
+
+$(document).ready(function() {
+$('input:radio[name=bedStatus]').change(function(){
+
+
+if (this.value == 'light') {
+bgchange("light");
+  }
+  else if (this.value == 'dark') {
+      bgchange("dark");
+  }
+});
+
+});
+
+
+    $(document).ready(function() {
+      $().ready(function() {
+        $sidebar = $('.sidebar');
+        $clr = $('.btn-primary');
+        $navbar = $('.navbar');
+        $main_panel = $('.main-panel');
+
+        $full_page = $('.full-page');
+
+        $sidebar_responsive = $('body > .navbar-collapse');
+        sidebar_mini_active = true;
+        white_color = false;
+
+        window_width = $(window).width();
+
+        fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+        $('.fixed-plugin a').click(function(event) {
+          if ($(this).hasClass('switch-trigger')) {
+            if (event.stopPropagation) {
+              event.stopPropagation();
+            } else if (window.event) {
+              window.event.cancelBubble = true;
+            }
+          }
+        });
+
+        $('.fixed-plugin .background-color span').click(function() {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+
+          var new_color = $(this).data('color');
+
+          if ($sidebar.length != 0) {
+
+            colorchange(new_color);
+            $sidebar.attr('data', new_color);
+            if (new_color=='primary') $clr.attr('class', 'btn btn-primary');
+            if (new_color=='blue') $clr.attr('class', 'btn btn-info');
+            if (new_color=='green') $clr.attr('class', 'btn btn-success');
+            if (new_color=='orange') $clr.attr('class', 'btn btn-warning');
+            if (new_color=='red') $clr.attr('class', 'btn btn-danger');
+          }
+
+          if ($main_panel.length != 0) {
+            $main_panel.attr('data', new_color);
+          }
+
+          if ($full_page.length != 0) {
+            $full_page.attr('filter-color', new_color);
+          }
+
+          if ($sidebar_responsive.length != 0) {
+            $sidebar_responsive.attr('data', new_color);
+          }
+        });
+
+        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
+            sidebar_mini_active = false;
+            blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+          } else {
+            $('body').addClass('sidebar-mini');
+            sidebar_mini_active = true;
+            blackDashboard.showSidebarMessage('Sidebar mini activated...');
+          }
+
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function() {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
+
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function() {
+            clearInterval(simulateWindowResize);
+          }, 1000);
+        });
+
+        $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+          var $btn = $(this);
+
+          if (white_color == true) {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').removeClass('white-content');
+            }, 900);
+            white_color = false;
+          } else {
+
+            $('body').addClass('change-background');
+            setTimeout(function() {
+              $('body').removeClass('change-background');
+              $('body').addClass('white-content');
+            }, 900);
+
+            white_color = true;
+          }
+
+
+        });
+
+        $('.light-badge').click(function() {
+          $('body').addClass('white-content');
+        });
+
+        $('.dark-badge').click(function() {
+          $('body').removeClass('white-content');
+        });
+      });
+    });
+
+
+
+    function colorchange(new_color){
+  var user_id_pw = '{{user_c_id}}';
+
+  $.ajax({
+                type : "post",
+                url: '/set_settings',
+                dataType : "text",
+                data:'setting=colorchange&user_id='+user_id_pw+'&colorname='+new_color,
+                success : function(data) {
+                  // alert(data);
+                  Swal.fire({
+                  title: 'Success',
+                  icon: 'success',
+                  showConfirmButton:false,
+                    timer:1500
+                }).then(function(){ 
+                       location.reload();
+                       }
+                    );                     
+                },
+                error : function(data) {
+                  Swal.fire({
+                    title: 'Error',
+                    text:data.responseText,
+                    icon: 'error'
+                  })                     
+                }
+        });
+}
+
+function bgchange(bg_color){
+  var user_id_pw = '{{user_c_id}}'
+
+  $.ajax({
+                type : "post",
+                url: '/set_settings',
+                dataType : "text",
+                data:'setting=colorchange&user_id='+user_id_pw+'&bg_color='+bg_color,
+                success : function(data) {
+                  // alert(data);
+                  Swal.fire({
+                  title: 'Success',
+                  icon: 'success',
+                  showConfirmButton:false,
+                    timer:1500
+                }).then(function(){ 
+                       location.reload();
+                       }
+                    );                     
+                },
+                error : function(data) {
+                  Swal.fire({
+                    title: 'Error',
+                    text:data.responseText,
+                    icon: 'error'
+                  })                     
+                }
+        });
+}
+  </script>
+<!-- <script>
+    $(document).ready(function() {
+      // Javascript method's body can be found in assets/js/demos.js
+      demo.initDashboardPageCharts();
+
+      demo.initVectorMap();
+
+    });
+  </script> -->
+ 
+  <script type="text/javascript">
+
+    gradientChartOptionsConfigurationWithTooltipGreen = {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    barPercentage: 1.6,
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(29,140,248,0.0)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        suggestedMin: 50,
+                        suggestedMax: 125,
+                        padding: 20,
+                        fontColor: "#9e9e9e"
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 1.6,
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(0,242,195,0.1)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        padding: 20,
+                        fontColor: "#9e9e9e"
+                    }
+                }]
+            }
+        };
+
+
+    gradientBarChartConfiguration = {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(253,93,147,0.1)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        suggestedMin: 60,
+                        suggestedMax: 125,
+                        padding: 20,
+                        fontColor: "#9e9e9e"
+                    }
+                }],
+                xAxes: [{
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(253,93,147,0.1)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        padding: 20,
+                        fontColor: "#9e9e9e"
+                    }
+                }]
+            }
+        };
+
+gradientChartOptionsConfigurationWithTooltipPurple = {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            tooltips: {
+                backgroundColor: '#f5f5f5',
+                titleFontColor: '#333',
+                bodyFontColor: '#666',
+                bodySpacing: 4,
+                xPadding: 12,
+                mode: "nearest",
+                intersect: 0,
+                position: "nearest"
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    barPercentage: 1.6,
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(29,140,248,0.0)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        suggestedMin: 60,
+                        suggestedMax: 125,
+                        padding: 20,
+                        fontColor: "#9a9a9a"
+                    }
+                }],
+                xAxes: [{
+                    barPercentage: 1.6,
+                    gridLines: {
+                        drawBorder: false,
+                        color: 'rgba(225,78,202,0.1)',
+                        zeroLineColor: "transparent",
+                    },
+                    ticks: {
+                        padding: 20,
+                        fontColor: "#9a9a9a"
+                    }
+                }]
+            }
+        };
+
+var chart_labels = production_dates;
+        var chart_data = production_count;
+        var ctx = document.getElementById("chartBig1").getContext('2d');
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+        gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)');
+        var config = {
+            type: 'line',
+            data: {
+                labels: chart_labels,
+                datasets: [{
+                    label: "",
+                    fill: true,
+                    backgroundColor: gradientStroke,
+                    borderColor: '#d346b1',
+                    borderWidth: 2,
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    pointBackgroundColor: '#d346b1',
+                    pointBorderColor: 'rgba(255,255,255,0)',
+                    pointHoverBackgroundColor: '#d346b1',
+                    pointBorderWidth: 20,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 15,
+                    pointRadius: 4,
+                    data: chart_data,
+                }]
+            },
+            options: gradientChartOptionsConfigurationWithTooltipPurple
+        };
+        var myChartData = new Chart(ctx, config);
+var ctx = document.getElementById("chartLinePurple").getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(72,72,176,0.2)');
+        gradientStroke.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(119,52,169,0)');
+        var data = {
+            labels: production_dates,
+            datasets: [{
+                label: "",
+                fill: true,
+                backgroundColor: gradientStroke,
+                borderColor: '#d048b6',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: '#d048b6',
+                pointBorderColor: 'rgba(255,255,255,0)',
+                pointHoverBackgroundColor: '#d048b6',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: current_cons,
+            }]
+        };
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: gradientChartOptionsConfigurationWithTooltipPurple
+        });
+
+var ctx = document.getElementById("CountryChart").getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(29,140,248,0.2)');
+        gradientStroke.addColorStop(0.4, 'rgba(29,140,248,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(29,140,248,0)');
+        var myChart2 = new Chart(ctx, {
+            type: 'bar',
+            responsive: true,
+            legend: {
+                display: false
+            },
+            data: {
+                labels: daily_production_dates,
+                datasets: [{
+                    label: "",
+                    fill: true,
+                    backgroundColor: gradientStroke,
+                    hoverBackgroundColor: gradientStroke,
+                    borderColor: '#1f8ef1',
+                    borderWidth: 2,
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    data: daily_production_count,
+                }]
+            },
+            options: gradientBarChartConfiguration
+        });
+var ctxGreen = document.getElementById("chartLineGreen").getContext("2d");
+        var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+        gradientStroke.addColorStop(1, 'rgba(66,134,121,0.15)');
+        gradientStroke.addColorStop(0.4, 'rgba(66,134,121,0.0)');
+        gradientStroke.addColorStop(0, 'rgba(66,134,121,0)');
+        var data = {
+            labels: completed_tasks_dates,
+            datasets: [{
+                label: "",
+                fill: true,
+                backgroundColor: gradientStroke,
+                borderColor: '#00d6b4',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: '#00d6b4',
+                pointBorderColor: 'rgba(255,255,255,0)',
+                pointHoverBackgroundColor: '#00d6b4',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: completed_tasks,
+            }]
+        };
+        var myChart3 = new Chart(ctxGreen, {
+            type: 'line',
+            data: data,
+            options: gradientChartOptionsConfigurationWithTooltipGreen
+        });
+
+function selectOnlyThis(id){
+
+
+
+    document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+    // alert(id.value);
+    get_gr(id.value);
+  var myCheckbox = document.getElementsByName("myCheckbox");
+  Array.prototype.forEach.call(myCheckbox,function(el){
+    el.checked = false;
+  });
+  id.checked = true;
+
+
+
+  function get_gr(machine_id) {
+
+    $.getJSON($SCRIPT_ROOT + '/get_gr?machine_id='+machine_id,
+        function(data) {
+            // console.log(data);
+            $('#midd').text("Id: "+data.machine_idd+" | Name: "+data.machine_namee);
+            $('#machine_id_dt').val(data.machine_idd);
+            
+           myChartData.data.labels = (data.production_dates);
+           myChartData.data.datasets[0].data = (data.production_count);
+          
+
+
+
+           myChart.data.labels = (data.production_dates);
+           myChart.data.datasets[0].data = (data.current_cons);
+
+           myChart3.data.labels = (data.completed_tasks_dates);
+           myChart3.data.datasets[0].data = (data.completed_tasks);
+
+           
+           myChart2.data.labels = (data.daily_production_dates);
+           myChart2.data.datasets[0].data = (data.daily_production_count);
+
+           myChartData.update();
+           myChart.update();
+           myChart3.update();
+           myChart2.update();
+
+        }
+        );
+  
+};
+
+
+}
+
+
+
+
+$("#statics_dt_go").click(function(){
+
+    var machine_id_dt = document.getElementById('statics_dt').elements['machine_id_dt'].value;
+    var fromdate = document.getElementById('statics_dt').elements['fromdate'].value;
+    var todate = document.getElementById('statics_dt').elements['todate'].value;
+
+
+    if (fromdate != '' && todate != ''){
+           $.getJSON($SCRIPT_ROOT + '/get_gr_dt?machine_id='+machine_id_dt+'&fromdate='+fromdate+'&todate='+todate,
+            function(data) {
+            // console.log(data);
+           myChartData.data.labels = (data.production_dates);
+           myChartData.data.datasets[0].data = (data.production_count);
+
+           myChart.data.labels = (data.production_dates);
+           myChart.data.datasets[0].data = (data.current_cons);
+
+           myChart3.data.labels = (data.completed_tasks_dates);
+           myChart3.data.datasets[0].data = (data.completed_tasks);
+
+           
+           myChart2.data.labels = (data.daily_production_dates);
+           myChart2.data.datasets[0].data = (data.daily_production_count);
+
+           myChartData.update();
+           myChart.update();
+           myChart3.update();
+           myChart2.update();
+
+        }
+        );
+
+  }
+  else {
+          Swal.fire({
+                    title: 'Please select Calender',
+                    icon: 'error'
+                  })
+
+        }
+
+
+
+    });
+
+
+
+function downloadExcelReport() {
+    var e = document.getElementById("report");
+    var value = e.value;
+    var machine_id_dt = document.getElementById('statics_dt').elements['machine_id_dt'].value;
+    var fromdate = document.getElementById('statics_dt').elements['fromdate'].value;
+    var todate = document.getElementById('statics_dt').elements['todate'].value;
+
+
+    if (fromdate != '' && todate != ''){
+
+        $.ajax({
+            type : "post",
+            url: '/get_gr_dt_report?machine_id='+ machine_id_dt + '&fromdate='+ fromdate+'&todate='+todate+'&report='+value,
+            dataType : "text",
+            success : function(data) {
+                var hiddenElement = document.createElement('a');  
+                hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(data);  
+                hiddenElement.target = '_blank';  
+                hiddenElement.download = value+'.csv'; 
+                hiddenElement.click();  
+
+            },
+            error : function(request, status, error) { 
+
+            Swal.fire({
+                    title: request.responseText,
+                    icon: 'error'
+                  }) 
+                 
+            }
+        });
+
+    }
+     else {
+          Swal.fire({
+                    title: 'Please select Calender',
+                    icon: 'error'
+                  })
+
+        }
+
+}
+
+
+  </script>
+
+
+</body>
+
+ 
+</html>
